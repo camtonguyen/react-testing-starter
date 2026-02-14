@@ -16,7 +16,10 @@ const ProductDetail = ({ productId }: { productId: number }) => {
 
     setLoading(true);
     fetch("/products/" + productId)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) return undefined;
+        return res.json();
+      })
       .then((data) => setProduct(data))
       .catch((err) => setError((err as Error).message))
       .finally(() => setLoading(false));

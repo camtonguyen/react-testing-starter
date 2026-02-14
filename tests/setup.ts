@@ -1,9 +1,18 @@
 import '@testing-library/jest-dom/vitest';
 import { cleanup } from '@testing-library/react';
-import { afterEach } from 'vitest';
+import { afterEach, beforeEach } from 'vitest';
 import ResizeObserver from 'resize-observer-polyfill';
+import { makeServer, server } from './mocks/server';
 
 global.ResizeObserver = ResizeObserver;
+
+beforeEach(() => {
+  makeServer();
+});
+
+afterEach(() => {
+  server?.shutdown();
+});
 
 window.HTMLElement.prototype.hasPointerCapture = vi.fn();
 window.HTMLElement.prototype.releasePointerCapture = vi.fn();
